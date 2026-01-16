@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perpustakaan Digital - Dashboard User</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f5f6fa;
+        }
+
+        .nav-user {
+            font-weight: 500;
+        }
+
+        .menu-tabs button {
+            border: none;
+            background: none;
+            padding: 10px 28px;
+            font-weight: 500;
+        }
+
+        .menu-tabs button:hover {
+            background-color: #e5e7eb;
+            border-radius: 50px;
+        }
+
+        .nav-tab-active {
+            background-color: #111827 !important;
+            color: white !important;
+            border-radius: 50px;
+        }
+
+        .category-btn.active {
+            background-color: #000;
+            color: #fff !important;
+        }
+
+        .book-card img {
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .tag-available {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #00c853;
+            color: #fff;
+            padding: 2px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+
+        .user-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: #f1f3f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #111827;
+        }
+
+        .book-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar bg-white py-3 shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <!-- Logo Baru -->
+            <div class="d-flex align-items-center gap-3">
+                <div style="
+                    width: 40px;
+                    height: 40px;
+                    background: #0b0f19;
+                    color: white;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 18px;">
+                    <i class="bi bi-book"></i>
+                </div>
+
+                <div>
+                    <h5 class="m-0 fw-semibold">Perpustakaan Digital</h5>
+                    <small class="text-secondary">Portal Siswa</small>
+                </div>
+            </div>
+
+            <!-- USER INFO UPDATED -->
+            <div class="d-flex align-items-center gap-4 nav-user">
+
+                <div class="d-flex align-items-center gap-2">
+                    <!-- icon profile -->
+                    <div class="user-icon">
+                        <i class="bi bi-person"></i>
+                    </div>
+
+                    <!-- name + nis -->
+                    <div class="d-flex flex-column lh-sm">
+                        <span class="fw-semibold" id="userName">Ahmad Pratama</span>
+                        <span class="text-muted" id="userNis" style="font-size: 12px;">20230001</span>
+                    </div>
+                </div>
+
+                <!-- logout -->
+                <a href="javascript:void(0);" onclick="logout()" class="text-decoration-none text-dark fw-semibold">
+                    <i class="bi bi-box-arrow-right"></i> Keluar
+                </a>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- MENU TABS (Style Admin) -->
+    <div class="container mt-4">
+        <div class="menu-tabs bg-white p-2 rounded-pill shadow-sm d-flex justify-content-around">
+            <a href="dashboardUser.html" style="text-decoration:none; color: white;"><button class="nav-tab-active">Jelajahi Buku</button></a>
+            <a href="pinjamUser.html" style="text-decoration:none; color: black;"><button>Buku Dipinjam</button></a>
+        </div>
+    </div>
+
+    <!-- JUMBOTRON SEARCH -->
+    <div class="container mt-4">
+        <div class="bg-white rounded-4 shadow-sm p-4">
+
+            <!-- Search -->
+            <h6 class="fw-semibold">Cari Buku</h6>
+            <p class="text-secondary mb-2">Temukan buku yang Anda butuhkan untuk pembelajaran</p>
+
+            <input type="text" class="form-control mb-4" placeholder="Cari berdasarkan judul atau penulis...">
+
+            <!-- Category Filter -->
+            <div class="d-flex flex-wrap gap-2">
+                <button class="btn btn-outline-dark rounded-pill px-4 category-btn active">Semua</button>
+                <button class="btn btn-outline-dark rounded-pill px-4 category-btn">Teknologi</button>
+                <button class="btn btn-outline-dark rounded-pill px-4 category-btn">Komputer Sains</button>
+                <button class="btn btn-outline-dark rounded-pill px-4 category-btn">Artificial Intelligence</button>
+                <button class="btn btn-outline-dark rounded-pill px-4 category-btn">Matematika</button>
+                <button class="btn btn-outline-dark rounded-pill px-4 category-btn">Fisika</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MAIN BOOK CONTENT -->
+    <div class="container mt-4 mb-5">
+        <div class="row g-4">
+
+            <!-- Card 1 -->
+            <div class="col-md-3">
+                <div class="card book-card shadow-sm rounded-4 position-relative" onclick="openBorrowModal('Pemrograman Web Modern dengan React', 'John Doe')">
+                    <img src="https://images.pexels.com/photos/256559/pexels-photo-256559.jpeg"
+                        class="card-img-top rounded-top-4">
+                    <span class="tag-available">Tersedia</span>
+                    <div class="card-body">
+                        <h6 class="fw-semibold">Pemrograman Web Modern dengan React</h6>
+                        <p class="text-secondary mb-1">John Doe</p>
+                        <p class="small text-secondary">Panduan lengkap untuk mempelajari ReactJS...</p>
+                        <span class="badge bg-light text-dark">Teknologi</span>
+                        <button class="btn btn-dark w-100 mt-3">Pinjam</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-md-3">
+                <div class="card book-card shadow-sm rounded-4 position-relative" onclick="openBorrowModal('Database Design and Management', 'Jane Smith')">
+                    <img src="https://images.pexels.com/photos/577210/pexels-photo-577210.jpeg"
+                        class="card-img-top rounded-top-4">
+                    <span class="tag-available">Tersedia</span>
+                    <div class="card-body">
+                        <h6 class="fw-semibold">Database Design and Management</h6>
+                        <p class="text-secondary mb-1">Jane Smith</p>
+                        <p class="small text-secondary">Konsep dasar hingga advanced dalam desain database...</p>
+                        <span class="badge bg-light text-dark">Teknologi</span>
+                        <button class="btn btn-dark w-100 mt-3">Pinjam</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-md-3">
+                <div class="card book-card shadow-sm rounded-4 position-relative" onclick="openBorrowModal('Algoritma dan Struktur Data Komputer', 'Robert Johnson')">
+                    <img src="https://images.unsplash.com/photo-1551033541-2075d8363c66"
+                        class="card-img-top rounded-top-4">
+                    <span class="tag-available">Tersedia</span>
+                    <div class="card-body">
+                        <h6 class="fw-semibold">Algoritma dan Struktur Data Komputer</h6>
+                        <p class="text-secondary mb-1">Robert Johnson</p>
+                        <p class="small text-secondary">Fundamental algorithms untuk programmer...</p>
+                        <span class="badge bg-light text-dark">Komputer Sains</span>
+                        <button class="btn btn-dark w-100 mt-3">Pinjam</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="col-md-3">
+                <div class="card book-card shadow-sm rounded-4 position-relative" onclick="openBorrowModal('Machine Learning untuk Pemula', 'Sarah Wilson')">
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475"
+                        class="card-img-top rounded-top-4">
+                    <span class="tag-available">Tersedia</span>
+                    <div class="card-body">
+                        <h6 class="fw-semibold">Machine Learning untuk Pemula</h6>
+                        <p class="text-secondary mb-1">Sarah Wilson</p>
+                        <p class="small text-secondary">Pengenalan machine learning dengan contoh praktis...</p>
+                        <span class="badge bg-light text-dark">Artificial Intelligence</span>
+                        <button class="btn btn-dark w-100 mt-3">Pinjam</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="col-md-3">
+                <div class="card book-card shadow-sm rounded-4 position-relative" onclick="openBorrowModal('Kalkulus dan Analisis Real', 'Prof. Michael Brown')">
+                    <img src="https://images.unsplash.com/photo-1509223197845-458d87318791"
+                        class="card-img-top rounded-top-4">
+                    <span class="tag-available">Tersedia</span>
+                    <div class="card-body">
+                        <h6 class="fw-semibold">Kalkulus dan Analisis Real</h6>
+                        <p class="text-secondary mb-1">Prof. Michael Brown</p>
+                        <p class="small text-secondary">Buku teks kalkulus tingkat universitas...</p>
+                        <span class="badge bg-light text-dark">Matematika</span>
+                        <button class="btn btn-dark w-100 mt-3">Pinjam</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="col-md-3">
+                <div class="card book-card shadow-sm rounded-4 position-relative" onclick="openBorrowModal('Fisika Dasar I', 'Dr. Lisa Anderson')">
+                    <img src="https://images.unsplash.com/photo-1523978591478-c753949ff840"
+                        class="card-img-top rounded-top-4">
+                    <span class="tag-available">Tersedia</span>
+                    <div class="card-body">
+                        <h6 class="fw-semibold">Fisika Dasar I</h6>
+                        <p class="text-secondary mb-1">Dr. Lisa Anderson</p>
+                        <p class="small text-secondary">Mekanika, termodinamika, dan gelombang...</p>
+                        <span class="badge bg-light text-dark">Fisika</span>
+                        <button class="btn btn-dark w-100 mt-3">Pinjam</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card - Tidak Tersedia 1 -->
+            <div class="col-md-3">
+                <div class="card book-card shadow-sm rounded-4 position-relative" style="opacity: 0.6;" onclick="alert('Maaf, buku ini sedang tidak tersedia.')">
+                    <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&q=80"
+                        class="card-img-top rounded-top-4">
+
+
+                    <span class="tag-available" style="background:#9ca3af;">Tidak Tersedia</span>
+
+                    <div class="card-body">
+                        <h6 class="fw-semibold">Pengantar Jaringan Komputer</h6>
+                        <p class="text-secondary mb-1">Alex Turner</p>
+                        <p class="small text-secondary">
+                            Dasar-dasar jaringan, topologi, dan protokol umum.
+                        </p>
+
+                        <span class="badge bg-light text-dark">Teknologi</span>
+
+                        <button class="btn btn-secondary w-100 mt-3" disabled>
+                            Tidak Tersedia
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card - Tidak Tersedia 2 -->
+            <div class="col-md-3">
+                <div class="card book-card shadow-sm rounded-4 position-relative" style="opacity: 0.6;" onclick="alert('Maaf, buku ini sedang tidak tersedia.')">
+                    <img src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=800&q=80"
+                        class="card-img-top rounded-top-4">
+
+
+                    <span class="tag-available" style="background:#9ca3af;">Tidak Tersedia</span>
+
+                    <div class="card-body">
+                        <h6 class="fw-semibold">Dasar-Dasar Robotika</h6>
+                        <p class="text-secondary mb-1">Hiroshi Nakamura</p>
+                        <p class="small text-secondary">
+                            Pengenalan komponen robot dan kontrol gerak sederhana.
+                        </p>
+
+                        <span class="badge bg-light text-dark">Artificial Intelligence</span>
+
+                        <button class="btn btn-secondary w-100 mt-3" disabled>
+                            Tidak Tersedia
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MODAL PEMINJAMAN BUKU -->
+    <div class="modal fade" id="borrowModal" tabindex="-1" aria-labelledby="borrowModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="borrowModalLabel">Pinjam Buku</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Judul Buku</label>
+                        <input type="text" class="form-control" id="bookTitle" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Penulis</label>
+                        <input type="text" class="form-control" id="bookAuthor" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Tanggal Peminjaman</label>
+                        <input type="date" class="form-control" id="borrowDate" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Tanggal Pengembalian</label>
+                        <input type="date" class="form-control" id="returnDate" required>
+                    </div>
+                    <div class="alert alert-info" role="alert">
+                        <small><strong>Catatan:</strong> Durasi peminjaman maksimal 14 hari. Jika terlambat, akan dikenakan denda.</small>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-dark" onclick="confirmBorrow()">Pinjam Buku</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Script agar tombol kategori bisa diklik (Visual Effect)
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Reset semua tombol
+                document.querySelectorAll('.category-btn').forEach(b => {
+                    b.classList.remove('active');
+                    b.classList.remove('btn-dark'); // Hapus background hitam
+                    b.classList.add('btn-outline-dark'); // Kembalikan outline
+                });
+                // Set tombol aktif
+                this.classList.remove('btn-outline-dark');
+                this.classList.add('active', 'btn-dark'); // Tambah background hitam
+            });
+        });
+
+        // Tampilkan info siswa yang login
+        window.addEventListener('load', function() {
+            console.log('Dashboard loaded');
+            const siswaLogin = localStorage.getItem('siswaLogin');
+            console.log('siswaLogin data:', siswaLogin);
+            
+            if (!siswaLogin) {
+                console.log('siswaLogin is empty or null');
+                // Wait a bit untuk localStorage selesai sync
+                setTimeout(() => {
+                    const siswaLoginRetry = localStorage.getItem('siswaLogin');
+                    console.log('Retry siswaLogin:', siswaLoginRetry);
+                    
+                    if (!siswaLoginRetry) {
+                        console.log('Masih tidak ada siswa login, redirect ke login');
+                        window.location.href = '../../loginSiswa.html';
+                    } else {
+                        loadUserData(siswaLoginRetry);
+                    }
+                }, 500);
+                return;
+            }
+            
+            loadUserData(siswaLogin);
+        });
+        
+        function loadUserData(siswaLoginData) {
+            try {
+                const siswa = JSON.parse(siswaLoginData);
+                console.log('Parsed siswa:', siswa);
+                document.getElementById('userName').textContent = siswa.nama;
+                document.getElementById('userNis').textContent = siswa.nis;
+                console.log('User data loaded successfully');
+            } catch (error) {
+                console.error('Error loading siswa data:', error);
+                window.location.href = '../../loginSiswa.html';
+            }
+
+            // Set tanggal peminjaman hari ini
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('borrowDate').value = today;
+        }
+
+        // Fungsi logout
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin keluar?')) {
+                localStorage.removeItem('siswaLogin');
+                localStorage.removeItem('userRole');
+                window.location.href = '../../index.html';
+            }
+        }
+
+        // Fungsi buka modal peminjaman
+        function openBorrowModal(bookTitle, bookAuthor) {
+            document.getElementById('bookTitle').value = bookTitle;
+            document.getElementById('bookAuthor').value = bookAuthor;
+            
+            // Set default tanggal pengembalian 7 hari dari hari ini
+            const today = new Date();
+            const returnDate = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+            document.getElementById('returnDate').value = returnDate.toISOString().split('T')[0];
+            
+            // Buka modal
+            const borrowModal = new bootstrap.Modal(document.getElementById('borrowModal'));
+            borrowModal.show();
+        }
+
+        // Fungsi konfirmasi peminjaman
+        function confirmBorrow() {
+            const bookTitle = document.getElementById('bookTitle').value;
+            const bookAuthor = document.getElementById('bookAuthor').value;
+            const borrowDate = document.getElementById('borrowDate').value;
+            const returnDate = document.getElementById('returnDate').value;
+            const siswaLogin = JSON.parse(localStorage.getItem('siswaLogin'));
+
+            // Validasi tanggal pengembalian
+            if (!returnDate) {
+                alert('Silakan pilih tanggal pengembalian!');
+                return;
+            }
+
+            // Validasi durasi peminjaman (maksimal 14 hari)
+            const borrow = new Date(borrowDate);
+            const returns = new Date(returnDate);
+            const diffTime = Math.abs(returns - borrow);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffDays > 14) {
+                alert('Durasi peminjaman maksimal 14 hari!');
+                return;
+            }
+
+            if (diffDays < 1) {
+                alert('Tanggal pengembalian harus lebih dari tanggal peminjaman!');
+                return;
+            }
+
+            // Simpan data peminjaman ke localStorage
+            const pinjam = {
+                id: Date.now(),
+                judul: bookTitle,
+                penulis: bookAuthor,
+                tanggalPinjam: borrowDate,
+                tanggalKembali: returnDate,
+                siswa: siswaLogin.nama,
+                nis: siswaLogin.nis,
+                status: 'aktif'
+            };
+
+            // Ambil data peminjaman yang sudah ada
+            let pinjamList = JSON.parse(localStorage.getItem('pinjamList')) || [];
+            pinjamList.push(pinjam);
+            localStorage.setItem('pinjamList', JSON.stringify(pinjamList));
+
+            // Tutup modal
+            bootstrap.Modal.getInstance(document.getElementById('borrowModal')).hide();
+
+            // Tampilkan alert sukses
+            alert('Buku "' + bookTitle + '" berhasil dipinjam!');
+
+            // Redirect ke halaman buku dipinjam
+            setTimeout(() => {
+                window.location.href = 'pinjamUser.html';
+            }, 500);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informasi Login Siswa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .container-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header-info {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header-info h1 {
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .card-info {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-info h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .siswa-item {
+            border: 1px solid #e5e7eb;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            background: #f9fafb;
+        }
+
+        .siswa-item h5 {
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+
+        .credential-row {
+            display: flex;
+            gap: 20px;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .credential-row strong {
+            color: #6b7280;
+            min-width: 80px;
+        }
+
+        .credential-value {
+            font-family: 'Courier New', monospace;
+            color: #1f2937;
+            background: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .btn-back {
+            background: white;
+            color: #667eea;
+            border: 2px solid white;
+            padding: 10px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .btn-back:hover {
+            background: transparent;
+            color: white;
+        }
+
+        .alert-info-box {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .step-guide {
+            counter-reset: step-counter;
+            list-style: none;
+            padding: 0;
+        }
+
+        .step-guide li {
+            counter-increment: step-counter;
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .step-guide li:before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: -2px;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .credential-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-wrapper">
+        <!-- HEADER -->
+        <div class="header-info">
+            <h1><i class="bi bi-info-circle"></i> Informasi Login Siswa</h1>
+            <p>Panduan dan Data Kredensial untuk Login E-Perpustakaan</p>
+        </div>
+
+        <!-- BACK BUTTON -->
+        <div style="text-align: center; margin-bottom: 30px;">
+            <a href="index.html" class="btn-back">
+                <i class="bi bi-arrow-left"></i> Kembali ke Halaman Utama
+            </a>
+            <a href="testLogin.html" class="btn-back" style="margin-left: 10px; background: rgba(255, 193, 7, 0.2); border-color: rgba(255, 193, 7, 0.5);">
+                <i class="bi bi-bug"></i> Debug / Test Login
+            </a>
+        </div>
+
+        <!-- ALERT -->
+        <div class="alert-info-box">
+            <strong><i class="bi bi-exclamation-triangle"></i> Perhatian!</strong>
+            <p style="margin: 8px 0 0 0; font-size: 14px;">Halaman ini berisi informasi login untuk testing. Jangan bagikan kredensial ini kepada orang yang tidak berwenang.</p>
+        </div>
+
+        <!-- PANDUAN LOGIN -->
+        <div class="card-info">
+            <h3><i class="bi bi-question-circle"></i> Cara Login Siswa</h3>
+            <ol class="step-guide">
+                <li>Klik tombol <strong>"Login Siswa"</strong> di halaman utama</li>
+                <li>Pilih login menggunakan <strong>Email</strong> atau <strong>NIS</strong></li>
+                <li>Masukkan email atau NIS sesuai pilihan Anda</li>
+                <li>Masukkan password yang sesuai</li>
+                <li>Klik tombol <strong>"Masuk"</strong></li>
+                <li>Jika berhasil, Anda akan diarahkan ke dashboard siswa</li>
+            </ol>
+        </div>
+
+        <!-- DAFTAR SISWA -->
+        <div class="card-info">
+            <h3><i class="bi bi-people"></i> Daftar Siswa Terdaftar</h3>
+            <p style="color: #6b7280; margin-bottom: 20px;">Gunakan salah satu dari data berikut untuk login. Anda bisa menggunakan Email <strong>ATAU</strong> NIS.</p>
+
+            <div class="siswa-item">
+                <h5><i class="bi bi-person-circle"></i> Ahmad Pratama</h5>
+                <div class="credential-row">
+                    <strong>NIS:</strong>
+                    <span class="credential-value">20230001</span>
+                </div>
+                <div class="credential-row">
+                    <strong>Email:</strong>
+                    <span class="credential-value">ahmad@sekolah.ac.id</span>
+                </div>
+                <div class="credential-row">
+                    <strong>Password:</strong>
+                    <span class="credential-value">ahmad123</span>
+                </div>
+            </div>
+
+            <div class="siswa-item">
+                <h5><i class="bi bi-person-circle"></i> Sari Indah</h5>
+                <div class="credential-row">
+                    <strong>NIS:</strong>
+                    <span class="credential-value">20230002</span>
+                </div>
+                <div class="credential-row">
+                    <strong>Email:</strong>
+                    <span class="credential-value">sari.indah@sekolah.ac.id</span>
+                </div>
+                <div class="credential-row">
+                    <strong>Password:</strong>
+                    <span class="credential-value">sari123</span>
+                </div>
+            </div>
+
+            <div class="siswa-item">
+                <h5><i class="bi bi-person-circle"></i> Reza Ramdhani</h5>
+                <div class="credential-row">
+                    <strong>NIS:</strong>
+                    <span class="credential-value">20230003</span>
+                </div>
+                <div class="credential-row">
+                    <strong>Email:</strong>
+                    <span class="credential-value">reza@sekolah.ac.id</span>
+                </div>
+                <div class="credential-row">
+                    <strong>Password:</strong>
+                    <span class="credential-value">reza123</span>
+                </div>
+            </div>
+
+            <div class="siswa-item">
+                <h5><i class="bi bi-person-circle"></i> Rina Permata</h5>
+                <div class="credential-row">
+                    <strong>NIS:</strong>
+                    <span class="credential-value">20230004</span>
+                </div>
+                <div class="credential-row">
+                    <strong>Email:</strong>
+                    <span class="credential-value">rina@sekolah.ac.id</span>
+                </div>
+                <div class="credential-row">
+                    <strong>Password:</strong>
+                    <span class="credential-value">rina123</span>
+                </div>
+            </div>
+
+            <div class="siswa-item">
+                <h5><i class="bi bi-person-circle"></i> Budi Santoso</h5>
+                <div class="credential-row">
+                    <strong>NIS:</strong>
+                    <span class="credential-value">20220015</span>
+                </div>
+                <div class="credential-row">
+                    <strong>Email:</strong>
+                    <span class="credential-value">budi@sekolah.ac.id</span>
+                </div>
+                <div class="credential-row">
+                    <strong>Password:</strong>
+                    <span class="credential-value">budi123</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TIPS -->
+        <div class="card-info">
+            <h3><i class="bi bi-lightbulb"></i> Tips Penting</h3>
+            <ul style="padding-left: 20px; color: #4b5563;">
+                <li>Password bersifat <strong>case-sensitive</strong> (bedakan huruf besar dan kecil)</li>
+                <li>Gunakan email <strong>atau</strong> NIS saat login, tidak keduanya</li>
+                <li>Jika lupa password, hubungi admin di halaman "Lihat Data Login Siswa"</li>
+                <li>Data siswa tersimpan di <strong>localStorage browser</strong> Anda</li>
+                <li>Hapus cookies jika ada masalah login</li>
+            </ul>
+        </div>
+
+        <!-- TROUBLESHOOT -->
+        <div class="card-info" style="background: #fef3c7; border-left: 4px solid #f59e0b;">
+            <h3 style="color: #92400e;"><i class="bi bi-exclamation-triangle"></i> Jika Gagal Login</h3>
+            <ul style="padding-left: 20px; color: #78350f;">
+                <li>Pastikan <strong>email/NIS dan password</strong> sudah benar</li>
+                <li>Cek apakah <strong>browser JavaScript</strong> diaktifkan</li>
+                <li>Coba buka di <strong>tab incognito/private</strong> untuk menghindari cache</li>
+                <li>Buka <strong>Developer Console</strong> (F12) untuk melihat error messages</li>
+                <li>Jika masih bermasalah, silakan hubungi admin</li>
+            </ul>
+        </div>
+
+        <!-- FOOTER -->
+        <div style="text-align: center; color: white; margin-top: 40px;">
+            <p style="margin: 0;">E-Perpustakaan &copy; 2026 - Sistem Manajemen Perpustakaan Digital</p>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kelola Siswa - Sistem Manajemen Perpustakaan</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f8fafc;
+            font-family: system-ui;
+        }
+
+        .user-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-tabs button {
+            border: none;
+            background: none;
+            padding: 10px 28px;
+            font-weight: 500;
+        }
+
+        .menu-tabs button:hover {
+            background: #e5e7eb;
+            border-radius: 50px;
+        }
+
+        .nav-tab-active {
+            background: #111827 !important;
+            color: white !important;
+            border-radius: 50px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .search-card,
+        .list-card {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+            padding: 24px;
+        }
+
+        .small-muted {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .badge-status {
+            background: #111827;
+            color: white;
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .badge-inactive {
+            background: #e5e7eb;
+            color: #111827;
+            border-radius: 12px;
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+
+        .btn-action {
+            border: 1px solid #e5e7eb;
+            background: white;
+            padding: 6px 8px;
+            border-radius: 8px;
+        }
+
+        .btn-action:hover {
+            background: #f3f4f6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar bg-white py-3 shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <div class="d-flex align-items-center gap-3">
+                <div
+                    style="width:40px;height:40px;background:#111827;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                    <i class="bi bi-shield-lock"></i>
+                </div>
+                <div>
+                    <h5 class="m-0 fw-semibold">Sistem Manajemen Perpustakaan</h5>
+                    <small class="text-secondary">Panel Administrator</small>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-4">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="user-icon"><i class="bi bi-person"></i></div>
+                    <div class="d-flex flex-column lh-sm">
+                        <span class="fw-semibold" id="adminName">Kelompok 5</span>
+                        <span class="text-muted" id="adminRole" style="font-size: 12px;">Admin</span>
+                    </div>
+                </div>
+                <a href="../../index.html" class="text-decoration-none text-dark fw-semibold">
+                    <i class="bi bi-box-arrow-right"></i> Keluar
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MENU TABS -->
+    <div class="container mt-4">
+        <div class="menu-tabs bg-white p-2 rounded-pill shadow-sm d-flex justify-content-around">
+            <a href="dashboardAdmin.html" style=" text-decoration:none; color: black;"><button>Dashboard</button></a>
+            <a href="kelolaBukuAdmin.html" style=" text-decoration:none; color: black;"><button>Kelola Buku</button></a>
+            <a href="kelolaSiswaAdmin.html" style=" text-decoration:none; color: white;"><button
+                    class="nav-tab-active">Kelola
+                    Siswa</button></a>
+            <a href="kelolaPinjamAdmin.html" style=" text-decoration:none; color: black;"><button>Kelola
+                    Peminjaman</button></a>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between">
+            <div>
+                <h4 class="fw-bold">Manajemen Siswa</h4>
+                <p class="text-secondary">Kelola data siswa dan anggota perpustakaan</p>
+            </div>
+
+            <button class="btn btn-dark px-4" data-bs-toggle="modal" data-bs-target="#modalTambahSiswa">
+                <i class="bi bi-plus-lg"></i> Tambah Siswa
+            </button>
+        </div>
+
+        <!-- STATISTIC BOXES -->
+        <div class="row g-3 mt-1">
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="small-muted">Total Siswa</div>
+                    <h2 class="mt-2">4</h2>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="small-muted">Siswa Aktif</div>
+                    <h2 class="mt-2 text-success">3</h2>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="small-muted">Siswa Tidak Aktif</div>
+                    <h2 class="mt-2 text-danger">1</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEARCH FILTER -->
+        <div class="search-card mt-4">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-9">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
+                        <input type="search" class="form-control"
+                            placeholder="Cari berdasarkan nama, email, atau NIM/NIS...">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <select class="form-select">
+                        <option selected>Semua Status</option>
+                        <option value="1">Aktif</option>
+                        <option value="2">Tidak Aktif</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABLE CARD -->
+        <div class="list-card mt-4">
+            <h6 class="fw-bold">Daftar Siswa (4)</h6>
+            <p class="small-muted">Kelola semua data siswa dan anggota perpustakaan</p>
+
+            <div class="table-responsive mt-3">
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Nama & NIM/NIS</th>
+                            <th>Kontak</th>
+                            <th>Jurusan</th>
+                            <th>Tahun</th>
+                            <th>Total Pinjam</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>
+                                <div class="fw-semibold">Ahmad Pratama</div>
+                                <small class="small-muted">20230001</small>
+                            </td>
+                            <td>
+                                <div>ahmad.student@sekolah.ac.id</div>
+                                <small class="small-muted">081234567890</small>
+                            </td>
+                            <td>Teknik Informatika</td>
+                            <td>2023</td>
+                            <td><span class="badge bg-light text-dark">5 buku</span></td>
+                            <td><span class="badge-status">Aktif</span></td>
+                            <td>
+                                <button class="btn-action me-1"><i class="bi bi-pencil"></i></button>
+                                <button class="btn-action me-1"><i class="bi bi-person-lines-fill"></i></button>
+                                <button class="btn-action"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="fw-semibold">Sari Indah</div>
+                                <small class="small-muted">20230002</small>
+                            </td>
+                            <td>
+                                <div>sari.indah@sekolah.ac.id</div>
+                                <small class="small-muted">081234567891</small>
+                            </td>
+                            <td>Sistem Informasi</td>
+                            <td>2023</td>
+                            <td><span class="badge bg-light text-dark">3 buku</span></td>
+                            <td><span class="badge-status">Aktif</span></td>
+                            <td>
+                                <button class="btn-action me-1"><i class="bi bi-pencil"></i></button>
+                                <button class="btn-action me-1"><i class="bi bi-person-lines-fill"></i></button>
+                                <button class="btn-action"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="fw-semibold">Budi Santoso</div>
+                                <small class="small-muted">20220015</small>
+                            </td>
+                            <td>
+                                <div>budi.santoso@sekolah.ac.id</div>
+                                <small class="small-muted">081234567892</small>
+                            </td>
+                            <td>Teknik Informatika</td>
+                            <td>2022</td>
+                            <td><span class="badge bg-light text-dark">8 buku</span></td>
+                            <td><span class="badge-status">Aktif</span></td>
+                            <td>
+                                <button class="btn-action me-1"><i class="bi bi-pencil"></i></button>
+                                <button class="btn-action me-1"><i class="bi bi-person-lines-fill"></i></button>
+                                <button class="btn-action"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="fw-semibold">Rina Permata</div>
+                                <small class="small-muted">20230025</small>
+                            </td>
+                            <td>
+                                <div>rina.permata@sekolah.ac.id</div>
+                                <small class="small-muted">081234567893</small>
+                            </td>
+                            <td>Matematika</td>
+                            <td>2023</td>
+                            <td><span class="badge bg-light text-dark">0 buku</span></td>
+                            <td><span class="badge-inactive">Tidak Aktif</span></td>
+                            <td>
+                                <button class="btn-action me-1"><i class="bi bi-pencil"></i></button>
+                                <button class="btn-action me-1"><i class="bi bi-person-lines-fill"></i></button>
+                                <button class="btn-action"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="height:40px;"></div>
+
+    <!-- MODAL TAMBAH SISWA -->
+    <div class="modal fade" id="modalTambahSiswa" tabindex="-1" aria-labelledby="modalTambahSiswaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold" id="modalTambahSiswaLabel">Tambah Siswa Baru</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formTambahSiswa">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="namaSiswa" class="form-label fw-bold">Nama Lengkap</label>
+                                <input type="text" class="form-control" id="namaSiswa" placeholder="Masukkan nama lengkap" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="nisSiswa" class="form-label fw-bold">NIM/NIS</label>
+                                <input type="text" class="form-control" id="nisSiswa" placeholder="202301001" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="emailSiswa" class="form-label fw-bold">Email</label>
+                                <input type="email" class="form-control" id="emailSiswa" placeholder="siswa@sekolah.ac.id" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="teleponSiswa" class="form-label fw-bold">Nomor Telepon</label>
+                                <input type="tel" class="form-control" id="teleponSiswa" placeholder="081234567890" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="jurusanSiswa" class="form-label fw-bold">Jurusan/Program Studi</label>
+                                <select class="form-select" id="jurusanSiswa" required>
+                                    <option selected disabled>Pilih jurusan</option>
+                                    <option>Teknik Informatika</option>
+                                    <option>Sistem Informasi</option>
+                                    <option>Pendidikan Matematika</option>
+                                    <option>Matematika</option>
+                                    <option>Fisika</option>
+                                    <option>Kimia</option>
+                                    <option>Biologi</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="tahunDaftar" class="form-label fw-bold">Tahun Pendaftaran</label>
+                                <input type="number" class="form-control" id="tahunDaftar" placeholder="2023" min="2000" max="2100" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="statusSiswa" class="form-label fw-bold">Status</label>
+                            <select class="form-select" id="statusSiswa" required>
+                                <option selected disabled>Pilih status</option>
+                                <option selected>Aktif</option>
+                                <option>Tidak Aktif</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="alamatSiswa" class="form-label fw-bold">Alamat</label>
+                            <textarea class="form-control" id="alamatSiswa" rows="3" placeholder="Masukkan alamat lengkap"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-dark" onclick="tambahSiswa()">Simpan Siswa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT BOOTSTRAP -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- SCRIPT TAMBAH SISWA -->
+    <script>
+        function tambahSiswa() {
+            // Ambil data dari form
+            const nama = document.getElementById('namaSiswa').value;
+            const nis = document.getElementById('nisSiswa').value;
+            const email = document.getElementById('emailSiswa').value;
+            const telepon = document.getElementById('teleponSiswa').value;
+            const jurusan = document.getElementById('jurusanSiswa').value;
+            const tahun = document.getElementById('tahunDaftar').value;
+            const status = document.getElementById('statusSiswa').value;
+            const alamat = document.getElementById('alamatSiswa').value;
+
+            // Validasi input
+            if (!nama || !nis || !email || !telepon || !jurusan || !tahun || !status) {
+                alert('Semua field harus diisi!');
+                return;
+            }
+
+            // Validasi email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Email tidak valid!');
+                return;
+            }
+
+            // Buat baris tabel baru
+            const tabelBody = document.querySelector('table tbody');
+            const newRow = document.createElement('tr');
+            const badgeStatus = status === 'Aktif' ? 
+                '<span class="badge-status">Aktif</span>' : 
+                '<span class="badge-inactive">Tidak Aktif</span>';
+
+            newRow.innerHTML = `
+                <td>
+                    <div class="fw-semibold">${nama}</div>
+                    <small class="small-muted">${nis}</small>
+                </td>
+                <td>
+                    <div>${email}</div>
+                    <small class="small-muted">${telepon}</small>
+                </td>
+                <td>${jurusan}</td>
+                <td>${tahun}</td>
+                <td><span class="badge bg-light text-dark">0 buku</span></td>
+                <td>${badgeStatus}</td>
+                <td>
+                    <button class="btn-action me-1" onclick="editSiswa(this)"><i class="bi bi-pencil"></i></button>
+                    <button class="btn-action me-1" onclick="lihatDetailSiswa(this)"><i class="bi bi-person-lines-fill"></i></button>
+                    <button class="btn-action" onclick="hapusSiswa(this)"><i class="bi bi-trash"></i></button>
+                </td>
+            `;
+
+            // Tambahkan baris ke tabel
+            tabelBody.appendChild(newRow);
+
+            // Update jumlah siswa
+            updateJumlahSiswa();
+            
+            // Simpan data siswa ke localStorage
+            simpanSiswaKeLocalStorage();
+
+            // Reset form
+            document.getElementById('formTambahSiswa').reset();
+
+            // Tutup modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('modalTambahSiswa'));
+            modal.hide();
+
+            // Tampilkan notifikasi sukses
+            alert('Siswa berhasil ditambahkan!');
+        }
+
+        function hapusSiswa(btn) {
+            if (confirm('Apakah Anda yakin ingin menghapus siswa ini?')) {
+                btn.closest('tr').remove();
+                updateJumlahSiswa();
+                simpanSiswaKeLocalStorage();
+                alert('Siswa berhasil dihapus!');
+            }
+        }
+
+        function editSiswa(btn) {
+            alert('Fitur edit akan segera tersedia!');
+        }
+
+        function lihatDetailSiswa(btn) {
+            alert('Fitur detail siswa akan segera tersedia!');
+        }
+
+        function updateJumlahSiswa() {
+            const jumlahSiswa = document.querySelectorAll('table tbody tr').length;
+            
+            // Update total siswa
+            const statCards = document.querySelectorAll('.stat-card h2');
+            if (statCards.length > 0) {
+                statCards[0].textContent = jumlahSiswa;
+            }
+
+            // Update siswa aktif
+            const siswaAktif = document.querySelectorAll('table tbody tr td:nth-child(6) .badge-status').length;
+            if (statCards.length > 1) {
+                statCards[1].textContent = siswaAktif;
+            }
+
+            // Update siswa tidak aktif
+            const siswaTidakAktif = document.querySelectorAll('table tbody tr td:nth-child(6) .badge-inactive').length;
+            if (statCards.length > 2) {
+                statCards[2].textContent = siswaTidakAktif;
+            }
+        }
+
+        function simpanSiswaKeLocalStorage() {
+            const rows = document.querySelectorAll('table tbody tr');
+            const daftarSiswa = [];
+            
+            rows.forEach(row => {
+                const nama = row.cells[0].querySelector('.fw-semibold').textContent;
+                const nis = row.cells[0].querySelector('.small-muted').textContent;
+                daftarSiswa.push({ nama, nis });
+            });
+            
+            localStorage.setItem('daftarSiswa', JSON.stringify(daftarSiswa));
+        }
+    </script>
+
+</body>
+
+</html>

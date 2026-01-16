@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Form Submit</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light p-5">
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4>Test Form Submit & localStorage</h4>
+                </div>
+                <div class="card-body">
+                    <div id="status" class="alert alert-info" style="display: none;"></div>
+                    
+                    <!-- TEST 1: Simple Form Submit -->
+                    <div class="mb-4">
+                        <h5>Test 1: Form Submit</h5>
+                        <form id="testForm">
+                            <div class="mb-3">
+                                <input type="email" id="email" class="form-control" placeholder="Email" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Submit</button>
+                        </form>
+                        <div id="formResult"></div>
+                    </div>
+
+                    <!-- TEST 2: localStorage -->
+                    <div class="mb-4">
+                        <h5>Test 2: localStorage</h5>
+                        <button class="btn btn-success" onclick="testStorage()">Save to localStorage</button>
+                        <button class="btn btn-info" onclick="readStorage()">Read from localStorage</button>
+                        <button class="btn btn-danger" onclick="clearStorage()">Clear localStorage</button>
+                        <div id="storageResult" class="mt-2"></div>
+                    </div>
+
+                    <!-- TEST 3: Data Siswa -->
+                    <div class="mb-4">
+                        <h5>Test 3: Init Data Siswa</h5>
+                        <button class="btn btn-warning" onclick="initData()">Initialize Data</button>
+                        <div id="dataResult" class="mt-2"></div>
+                    </div>
+
+                    <!-- TEST 4: Simulasi Login -->
+                    <div class="mb-4">
+                        <h5>Test 4: Login Simulation</h5>
+                        <button class="btn btn-dark" onclick="simulateLogin()">Simulasi Login Ahmad</button>
+                        <div id="loginResult" class="mt-2"></div>
+                    </div>
+
+                    <!-- Console Output -->
+                    <div class="mt-4">
+                        <h5>Console Output:</h5>
+                        <div id="console" style="background: #000; color: #0f0; padding: 10px; border-radius: 5px; max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 12px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Override console.log untuk display di halaman
+    const consoleDiv = document.getElementById('console');
+    const originalLog = console.log;
+    console.log = function(...args) {
+        originalLog.apply(console, args);
+        const message = args.map(arg => {
+            if (typeof arg === 'object') {
+                return JSON.stringify(arg, null, 2);
+            }
+            return String(arg);
+        }).join(' ');
+        consoleDiv.innerHTML += message + '<br>';
+        consoleDiv.scrollTop = consoleDiv.scrollHeight;
+    };
+
+    // Test 1: Form Submit
+    document.getElementById('testForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        console.log('✓ Form submit event triggered');
+        const email = document.getElementById('email').value;
+        document.getElementById('formResult').innerHTML = `<div class="alert alert-success">Form submitted! Email: ${email}</div>`;
+        this.reset();
+    });
+
+    // Test 2: localStorage
+    function testStorage() {
+        try {
+            const testData = { nama: 'Test User', id: 123 };
+            localStorage.setItem('testData', JSON.stringify(testData));
+            console.log('✓ Data saved to localStorage:', testData);
+            document.getElementById('storageResult').innerHTML = `<div class="alert alert-success">Data saved!</div>`;
+        } catch (e) {
+            console.log('✗ Error saving to localStorage:', e);
+            document.getElementById('storageResult').innerHTML = `<div class="alert alert-danger">Error: ${e.message}</div>`;
+        }
+    }
+
+    function readStorage() {
+        const data = localStorage.getItem('testData');
+        console.log('✓ Data from localStorage:', data);
+        document.getElementById('storageResult').innerHTML = `<div class="alert alert-info"><pre>${data || 'Kosong'}</pre></div>`;
+    }
+
+    function clearStorage() {
+        localStorage.clear();
+        console.log('✓ localStorage cleared');
+        document.getElementById('storageResult').innerHTML = `<div class="alert alert-warning">localStorage cleared</div>`;
+    }
+
+    // Test 3: Data Siswa
+    function initData() {
+        const dataSiswa = [
+            { nama: 'Ahmad', nis: '20230001', email: 'ahmad@test.com', password: 'ahmad123' },
+            { nama: 'Sari', nis: '20230002', email: 'sari@test.com', password: 'sari123' }
+        ];
+        
+        localStorage.setItem('daftarSiswa', JSON.stringify(dataSiswa));
+        console.log('✓ Data siswa initialized:', dataSiswa);
+        document.getElementById('dataResult').innerHTML = `<div class="alert alert-success">Data siswa berhasil disimpan</div>`;
+    }
+
+    // Test 4: Login Simulation
+    function simulateLogin() {
+        const siswaData = {
+            nama: 'Ahmad Pratama',
+            nis: '20230001',
+            email: 'ahmad@sekolah.ac.id',
+            password: 'ahmad123'
+        };
+
+        try {
+            localStorage.setItem('siswaLogin', JSON.stringify(siswaData));
+            const verify = localStorage.getItem('siswaLogin');
+            
+            console.log('✓ Login data saved:', siswaData);
+            console.log('✓ Verify data:', verify);
+            
+            if (verify) {
+                document.getElementById('loginResult').innerHTML = `
+                    <div class="alert alert-success">
+                        <strong>Login Simulation Success!</strong><br>
+                        Will redirect in 3 seconds...<br>
+                        <small>Data: ${verify}</small>
+                    </div>
+                `;
+                
+                setTimeout(() => {
+                    console.log('Redirecting to dashboard...');
+                    window.location.href = 'screen/user/dashboardUser.html';
+                }, 3000);
+            } else {
+                document.getElementById('loginResult').innerHTML = `<div class="alert alert-danger">Error: localStorage tidak tersimpan</div>`;
+            }
+        } catch (e) {
+            console.log('✗ Error during login:', e);
+            document.getElementById('loginResult').innerHTML = `<div class="alert alert-danger">Error: ${e.message}</div>`;
+        }
+    }
+
+    // Initial load
+    window.addEventListener('load', function() {
+        console.log('Page loaded');
+        console.log('Browser localStorage available:', typeof(Storage) !== 'undefined');
+    });
+</script>
+</body>
+</html>

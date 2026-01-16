@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Siswa - E-Perpustakaan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px 30px;
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            margin: 0 auto 15px;
+        }
+
+        .logo-section h2 {
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+
+        .logo-section p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-control {
+            border: 1.5px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background-color: #f8f9fa;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            background-color: white;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group .input-group-text {
+            border: 1.5px solid #e0e0e0;
+            border-radius: 10px 0 0 10px;
+            background: #f8f9fa;
+            border-right: none;
+        }
+
+        .input-group .form-control {
+            border-radius: 0 10px 10px 0;
+            border-left: none;
+        }
+
+        .input-group .form-control:focus {
+            border-color: #667eea;
+            border-left-color: #667eea;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-weight: 600;
+            color: white;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+
+        .btn-back {
+            background: white;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-weight: 600;
+            color: #333;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-back:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .button-group .btn-back {
+            width: 100%;
+        }
+
+        .info-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 25px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .info-box strong {
+            color: #333;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            color: #28a745;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .loading {
+            display: none;
+        }
+
+        .spinner-border {
+            width: 1rem;
+            height: 1rem;
+            border-width: 0.2em;
+        }
+
+        .form-toggle {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .form-toggle a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .form-toggle a:hover {
+            text-decoration: underline;
+        }
+
+        .register-form {
+            display: none;
+        }
+
+        .register-form.active {
+            display: block;
+        }
+
+        .login-form.hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <div class="login-card">
+            <!-- LOGO & JUDUL -->
+            <div class="logo-section">
+                <div class="logo-icon"><i class="bi bi-person-check"></i></div>
+                <h2>Login Siswa</h2>
+                <p>E-Perpustakaan - Portal Siswa</p>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <form id="loginSiswaForm" class="login-form">
+                <div class="form-group">
+                    <label>Login Menggunakan:</label>
+                    <div class="d-flex gap-2 mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="loginType" id="loginEmail" value="email" checked>
+                            <label class="form-check-label" for="loginEmail">
+                                Email
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="loginType" id="loginNis" value="nis">
+                            <label class="form-check-label" for="loginNis">
+                                NIS
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" id="emailLoginGroup">
+                    <label for="emailLogin">Email</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        <input type="email" class="form-control" id="emailLogin" placeholder="nama@sekolah.ac.id">
+                    </div>
+                    <div class="error-message" id="emailLoginError"></div>
+                </div>
+
+                <div class="form-group" id="nisLoginGroup" style="display: none;">
+                    <label for="nisLogin">NIS (Nomor Induk Siswa)</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                        <input type="text" class="form-control" id="nisLogin" placeholder="Masukkan NIS Anda">
+                    </div>
+                    <div class="error-message" id="nisLoginError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="passwordLogin">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" class="form-control" id="passwordLogin" placeholder="Masukkan password" required>
+                        <button class="btn btn-outline-secondary" type="button" id="togglePassword" style="border-left: 0;">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                    <div class="error-message" id="passwordLoginError"></div>
+                </div>
+
+                <button type="submit" class="btn btn-login">
+                    <i class="bi bi-box-arrow-in-right"></i> Masuk
+                </button>
+
+                <div class="error-message" id="loginError"></div>
+                <div class="success-message" id="loginSuccess"></div>
+            </form>
+
+            <!-- REGISTER FORM -->
+            <form id="registerSiswaForm" class="register-form">
+                <div class="form-group">
+                    <label for="nisRegister">NIS (Nomor Induk Siswa)</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                        <input type="text" class="form-control" id="nisRegister" placeholder="Masukkan NIS Anda" required>
+                    </div>
+                    <div class="error-message" id="nisRegisterError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="emailRegister">Email</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        <input type="email" class="form-control" id="emailRegister" placeholder="nama@sekolah.ac.id" required>
+                    </div>
+                    <div class="error-message" id="emailRegisterError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="passwordRegister">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" class="form-control" id="passwordRegister" placeholder="Buat password minimal 6 karakter" required>
+                    </div>
+                    <small class="text-muted">Minimal 6 karakter</small>
+                    <div class="error-message" id="passwordRegisterError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Konfirmasi Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="Ulangi password" required>
+                    </div>
+                    <div class="error-message" id="confirmPasswordError"></div>
+                </div>
+
+                <button type="submit" class="btn btn-login">
+                    <i class="bi bi-person-plus"></i> Daftar
+                </button>
+
+                <div class="error-message" id="registerError"></div>
+                <div class="success-message" id="registerSuccess"></div>
+            </form>
+
+            <!-- TOMBOL KEMBALI & SWITCH FORM -->
+            <div class="button-group">
+                <a href="index.html" class="btn btn-back">
+                    <i class="bi bi-arrow-left"></i> Kembali
+                </a>
+            </div>
+
+            <div class="form-toggle">
+                <span id="toggleText">Belum punya akun? <a onclick="toggleForm()">Daftar di sini</a></span>
+            </div>
+            <div class="text-center mt-3">
+                <small><a href="#" onclick="resetDataSiswa()" class="text-secondary" style="text-decoration: none; font-size: 12px;"><i class="bi bi-arrow-clockwise"></i> Reset Data (Jika Gagal Login Terus)</a></small>
+            </div>
+
+            <!-- INFO BOX -->
+            <div class="info-box" id="infoBox">
+                <strong><i class="bi bi-info-circle"></i> Informasi:</strong>
+                <p style="margin: 8px 0 0 0;">Gunakan email dan NIS Anda yang terdaftar untuk login. Jika belum punya akun, silakan daftar terlebih dahulu.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle antara form login dan register
+        function toggleForm() {
+            const loginForm = document.getElementById('loginSiswaForm');
+            const registerForm = document.getElementById('registerSiswaForm');
+            const toggleText = document.getElementById('toggleText');
+            const infoBox = document.getElementById('infoBox');
+
+            loginForm.classList.toggle('hidden');
+            registerForm.classList.toggle('active');
+
+            if (registerForm.classList.contains('active')) {
+                toggleText.innerHTML = 'Sudah punya akun? <a onclick="toggleForm()">Masuk di sini</a>';
+                infoBox.innerHTML = '<strong><i class="bi bi-info-circle"></i> Informasi:</strong><p style="margin: 8px 0 0 0;">Silakan lengkapi data di bawah ini untuk mendaftar akun baru.</p>';
+            } else {
+                toggleText.innerHTML = 'Belum punya akun? <a onclick="toggleForm()">Daftar di sini</a>';
+                infoBox.innerHTML = '<strong><i class="bi bi-info-circle"></i> Informasi:</strong><p style="margin: 8px 0 0 0;">Gunakan email/NIS dan password Anda yang terdaftar untuk login. Jika belum punya akun, silakan daftar terlebih dahulu.</p>';
+            }
+        }
+
+        // Toggle antara Email dan NIS saat login
+        document.querySelectorAll('input[name="loginType"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const emailGroup = document.getElementById('emailLoginGroup');
+                const nisGroup = document.getElementById('nisLoginGroup');
+                
+                if (this.value === 'email') {
+                    emailGroup.style.display = 'block';
+                    nisGroup.style.display = 'none';
+                    document.getElementById('emailLogin').focus();
+                } else {
+                    emailGroup.style.display = 'none';
+                    nisGroup.style.display = 'block';
+                    document.getElementById('nisLogin').focus();
+                }
+            });
+        });
+
+        // INISIALISASI DATA SISWA JIKA BELUM ADA
+        function inisialisasiDataSiswa(force = false) {
+            const siswaTersimpan = localStorage.getItem('daftarSiswa');
+            if (!siswaTersimpan || force) {
+                // Jika belum ada data siswa, inisialisasi dengan data default
+                const dataSiswaDefault = [
+                    {
+                        nama: "Ahmad Pratama",
+                        nis: "20230001",
+                        email: "ahmad@sekolah.ac.id",
+                        telepon: "081234567890",
+                        jurusan: "Teknik Informatika",
+                        tahun: 2023,
+                        status: "Aktif",
+                        alamat: "Jl. Mawar No. 123",
+                        password: "ahmad123"
+                    },
+                    {
+                        nama: "Sari Indah",
+                        nis: "20230002",
+                        email: "sari.indah@sekolah.ac.id",
+                        telepon: "081234567891",
+                        jurusan: "Sistem Informasi",
+                        tahun: 2023,
+                        status: "Aktif",
+                        alamat: "Jl. Melati No. 45",
+                        password: "sari123"
+                    },
+                    {
+                        nama: "Reza Ramdhani",
+                        nis: "20230003",
+                        email: "reza@sekolah.ac.id",
+                        telepon: "081347563817",
+                        jurusan: "Sistem Informasi",
+                        tahun: 2023,
+                        status: "Aktif",
+                        alamat: "Jl. Cendana No. 78",
+                        password: "reza123"
+                    },
+                    {
+                        nama: "Rina Permata",
+                        nis: "20230004",
+                        email: "rina@sekolah.ac.id",
+                        telepon: "081567890123",
+                        jurusan: "Teknik Informatika",
+                        tahun: 2023,
+                        status: "Aktif",
+                        alamat: "Jl. Bunga No. 56",
+                        password: "rina123"
+                    },
+                    {
+                        nama: "Budi Santoso",
+                        nis: "20220015",
+                        email: "budi@sekolah.ac.id",
+                        telepon: "081234567892",
+                        jurusan: "Teknik Komputer",
+                        tahun: 2022,
+                        status: "Aktif",
+                        alamat: "Jl. Anggrek No. 34",
+                        password: "budi123"
+                    }
+                ];
+                localStorage.setItem('daftarSiswa', JSON.stringify(dataSiswaDefault));
+            }
+        }
+
+        // FUNGSI RESET DATA (Manual)
+        function resetDataSiswa() {
+            if(confirm('Apakah Anda yakin ingin mereset data siswa ke pengaturan awal? Data akun buatan sendiri mungkin akan hilang.')) {
+                inisialisasiDataSiswa(true);
+                alert('Data berhasil direset! Silakan coba login kembali.');
+                location.reload();
+            }
+        }
+
+        // LOGIN SISWA
+        document.getElementById('loginSiswaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Form submit triggered');
+            
+            const loginType = document.querySelector('input[name="loginType"]:checked').value;
+            const password = document.getElementById('passwordLogin').value;
+            const loginError = document.getElementById('loginError');
+
+            console.log('Login type:', loginType);
+            console.log('Password:', password);
+
+            // Reset error messages
+            loginError.style.display = 'none';
+            loginError.textContent = '';
+            document.getElementById('emailLoginError').style.display = 'none';
+            document.getElementById('nisLoginError').style.display = 'none';
+
+            let identifier = '';
+            let identifierField = '';
+
+            if (loginType === 'email') {
+                identifier = document.getElementById('emailLogin').value.trim();
+                identifierField = 'email';
+                console.log('Email identifier:', identifier);
+                if (!identifier) {
+                    document.getElementById('emailLoginError').textContent = 'Email harus diisi!';
+                    document.getElementById('emailLoginError').style.display = 'block';
+                    return;
+                }
+            } else {
+                identifier = document.getElementById('nisLogin').value.trim();
+                identifierField = 'nis';
+                console.log('NIS identifier:', identifier);
+                if (!identifier) {
+                    document.getElementById('nisLoginError').textContent = 'NIS harus diisi!';
+                    document.getElementById('nisLoginError').style.display = 'block';
+                    return;
+                }
+            }
+
+            if (!password) {
+                document.getElementById('passwordLoginError').textContent = 'Password harus diisi!';
+                document.getElementById('passwordLoginError').style.display = 'block';
+                return;
+            }
+
+            // Ambil data siswa dari localStorage
+            const siswaTersimpan = localStorage.getItem('daftarSiswa');
+            console.log('Data siswa tersimpan:', siswaTersimpan ? 'Ada' : 'Tidak ada');
+            
+            if (!siswaTersimpan) {
+                // Jika belum ada, inisialisasi terlebih dahulu
+                inisialisasiDataSiswa(true);
+                const siswaTersimpanBaru = localStorage.getItem('daftarSiswa');
+                if (!siswaTersimpanBaru) {
+                    loginError.textContent = 'Data siswa tidak ditemukan!';
+                    loginError.style.display = 'block';
+                    return;
+                }
+            }
+
+            try {
+                const daftarSiswa = JSON.parse(localStorage.getItem('daftarSiswa'));
+                console.log('Jumlah siswa:', daftarSiswa.length);
+                
+                // Cari siswa untuk diagnosa (Cek user dulu baru password)
+                let siswaFound;
+                if (identifierField === 'email') {
+                    // Gunakan toLowerCase() agar tidak masalah huruf besar/kecil
+                    // Gunakan toLowerCase() agar tidak masalah huruf besar/kecil
+                    siswaFound = daftarSiswa.find(siswa => siswa.email && siswa.email.toLowerCase() === identifier.toLowerCase());
+                } else {
+                    siswaFound = daftarSiswa.find(siswa => siswa.nis === identifier);
+                }
+
+                if (siswaFound && siswaFound.password === password) {
+                    // Login berhasil
+                    const siswaLogin = siswaFound;
+
+                    console.log('Menyimpan siswaLogin:', siswaLogin);
+                    console.log('JSON stringify:', JSON.stringify(siswaLogin));
+                    
+                    try {
+                        localStorage.setItem('siswaLogin', JSON.stringify(siswaLogin));
+                        localStorage.setItem('userRole', 'Siswa');
+                        
+                        // Verifikasi data tersimpan
+                        const verifikasiData = localStorage.getItem('siswaLogin');
+                        console.log('Verifikasi data setelah disimpan:', verifikasiData);
+                        
+                        if (!verifikasiData) {
+                            loginError.textContent = 'Error: Gagal menyimpan data ke localStorage!';
+                            loginError.style.display = 'block';
+                            return;
+                        }
+                    } catch (e) {
+                        console.error('Error saat menyimpan ke localStorage:', e);
+                        loginError.textContent = 'Error: ' + e.message;
+                        loginError.style.display = 'block';
+                        return;
+                    }
+                    
+                    console.log('Login berhasil untuk:', siswaLogin.nama);
+                    
+                    // Tampilkan pesan sukses
+                    const loginSuccess = document.getElementById('loginSuccess');
+                    loginSuccess.textContent = 'Login berhasil! Mengalihkan dalam 3 detik...';
+                    loginSuccess.style.display = 'block';
+                    
+                    // Redirect ke dashboard siswa setelah 3 detik (beri waktu untuk localStorage)
+                    setTimeout(() => {
+                        console.log('Redirecting to dashboard...');
+                        console.log('Final verify - siswaLogin:', localStorage.getItem('siswaLogin'));
+                        window.location.href = 'screen/user/dashboardUser.html';
+                    }, 3000);
+                } else {
+                    // Diagnosa error spesifik
+                    if (!siswaFound) {
+                        loginError.textContent = (identifierField === 'email' ? 'Email' : 'NIS') + ' tidak ditemukan!';
+                    } else {
+                        loginError.textContent = 'Password salah!';
+                        console.log('Debug: Password salah. Input: ' + password + ', Seharusnya: ' + siswaFound.password);
+                    }
+                    loginError.style.display = 'block';
+                }
+            } catch (error) {
+                loginError.textContent = 'Terjadi kesalahan saat login!';
+                loginError.style.display = 'block';
+                console.error('Error:', error);
+            }
+        });
+
+        // REGISTER SISWA
+        document.getElementById('registerSiswaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const nis = document.getElementById('nisRegister').value.trim();
+            const email = document.getElementById('emailRegister').value.trim();
+            const password = document.getElementById('passwordRegister').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const registerError = document.getElementById('registerError');
+            const registerSuccess = document.getElementById('registerSuccess');
+
+            // Reset error messages
+            registerError.style.display = 'none';
+            registerSuccess.style.display = 'none';
+            registerError.textContent = '';
+            registerSuccess.textContent = '';
+            document.getElementById('nisRegisterError').style.display = 'none';
+            document.getElementById('emailRegisterError').style.display = 'none';
+            document.getElementById('passwordRegisterError').style.display = 'none';
+            document.getElementById('confirmPasswordError').style.display = 'none';
+
+            // Validasi
+            if (!nis) {
+                document.getElementById('nisRegisterError').textContent = 'NIS harus diisi!';
+                document.getElementById('nisRegisterError').style.display = 'block';
+                return;
+            }
+
+            if (!email) {
+                document.getElementById('emailRegisterError').textContent = 'Email harus diisi!';
+                document.getElementById('emailRegisterError').style.display = 'block';
+                return;
+            }
+
+            if (password.length < 6) {
+                document.getElementById('passwordRegisterError').textContent = 'Password minimal 6 karakter!';
+                document.getElementById('passwordRegisterError').style.display = 'block';
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').textContent = 'Password tidak sesuai!';
+                document.getElementById('confirmPasswordError').style.display = 'block';
+                return;
+            }
+
+            // Ambil data siswa dari localStorage
+            const siswaTersimpan = localStorage.getItem('daftarSiswa');
+            
+            if (!siswaTersimpan) {
+                registerError.textContent = 'Data siswa tidak ditemukan!';
+                registerError.style.display = 'block';
+                return;
+            }
+
+            try {
+                const daftarSiswa = JSON.parse(siswaTersimpan);
+                
+                // Cek apakah NIS ada di data siswa
+                const siswaExist = daftarSiswa.find(siswa => siswa.nis === nis);
+                
+                if (!siswaExist) {
+                    // Jika NIS belum ada, buat akun baru (Open Registration)
+                    const newSiswa = {
+                        nama: email.split('@')[0], // Gunakan bagian depan email sebagai nama
+                        nis: nis,
+                        email: email,
+                        password: password,
+                        jurusan: 'Siswa Baru',
+                        tahun: new Date().getFullYear(),
+                        status: 'Aktif',
+                        telepon: '-',
+                        alamat: '-'
+                    };
+                    daftarSiswa.push(newSiswa);
+                } else {
+                    // Jika NIS sudah ada (Pre-seeded), validasi data
+                    
+                    // Cek apakah email sesuai
+                    if (siswaExist.email !== email) {
+                        registerError.textContent = 'Email tidak sesuai dengan NIS yang terdaftar!';
+                        registerError.style.display = 'block';
+                        return;
+                    }
+
+                    // Cek apakah sudah terdaftar (punya password)
+                    if (siswaExist.password && siswaExist.password !== '') {
+                        registerError.textContent = 'NIS ini sudah terdaftar! Silakan login dengan password Anda.';
+                        registerError.style.display = 'block';
+                        return;
+                    }
+
+                    // Set password untuk aktivasi akun
+                    siswaExist.password = password;
+                }
+                
+                // Simpan kembali ke localStorage
+                localStorage.setItem('daftarSiswa', JSON.stringify(daftarSiswa));
+
+                // Tampilkan pesan sukses
+                registerSuccess.textContent = 'Pendaftaran berhasil! Silakan login.';
+                registerSuccess.style.display = 'block';
+
+                // Reset form dan kembali ke form login setelah 2 detik
+                setTimeout(() => {
+                    document.getElementById('registerSiswaForm').reset();
+                    document.getElementById('loginSiswaForm').reset();
+                    toggleForm();
+                    registerSuccess.style.display = 'none';
+                }, 2000);
+
+            } catch (error) {
+                registerError.textContent = 'Terjadi kesalahan saat mendaftar!';
+                registerError.style.display = 'block';
+                console.error('Error:', error);
+            }
+        });
+
+        // Inisialisasi data siswa saat halaman dimuat
+        window.addEventListener('load', function() {
+            console.log('Page loaded, initializing data...');
+            inisialisasiDataSiswa();
+            
+            // Debug: Cek user yang ada di sistem
+            const users = JSON.parse(localStorage.getItem('daftarSiswa') || '[]');
+            console.log('List Email Terdaftar:', users.map(u => u.email));
+            
+            // Pastikan form listener terdaftar
+            const loginForm = document.getElementById('loginSiswaForm');
+            if (loginForm) {
+                console.log('Login form found, listeners ready');
+            } else {
+                console.log('ERROR: Login form not found!');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
